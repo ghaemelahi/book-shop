@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('book_images', function (Blueprint $table) {
+        Schema::create('book__images', function (Blueprint $table) {
             $table->id();
             $table->string('path_image')->comment('عکس های کتاب');
-            $table->unsignedBigInteger('book_id');
-            $table->foreign('book_id')->references('id')->on('books');
+            // $table->unsignedBigInteger('books_id')->nullable();
+            // $table->foreign('books_id')->references('id')->on('books');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_images');
+        Schema::dropIfExists('book__images');
     }
 };

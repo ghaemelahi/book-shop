@@ -26,10 +26,12 @@ Route::get('/addtocart',function(){
     return view('shop.add_to_cart');
 });
 Auth::routes();
-Route::prefix('admin')->group(function () {
+Route::group(['prefix'=>'admin'],function (){
+    // 'middleware'=>'auth',
     Route::get('/', function () {
         return view('admin.index');
     });
+    // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('/users',UserController::class);
     Route::resource('/books', BooksController::class);
     Route::resource('/orders',OrdersController::class);
@@ -37,9 +39,9 @@ Route::prefix('admin')->group(function () {
     Route::resource('/trusts',TrustController::class);
     // Route::post('attach', [\App\Http\Controllers\ImageController::class,'attach'])->name('image.attach');
     // Route::post('ck_upload', [\App\Http\Controllers\ImageController::class,'ck_upload'])->name('image.ck_upload');
-    Route::post('dropzone', [\App\Http\Controllers\ImageController::class, 'dropzoneUpload'])->name('dropzone');
+    Route::post('dropzone', [\App\Http\Controllers\Book_ImageController::class, 'dropzoneUpload'])->name('dropzone');
 
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
 Route::fallback(function () {

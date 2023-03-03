@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('IP');
             $table->string('roles');
+            $table->bigInteger('phone');
         });
     }
 
@@ -29,6 +30,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('IP');
             $table->dropColumn('roles');
+            $table->dropColumn('phone');
         });
     }
 };

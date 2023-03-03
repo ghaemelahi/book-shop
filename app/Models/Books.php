@@ -23,6 +23,6 @@ class Books extends Model
     protected $table = 'books';
 
     public function images(){
-        return $this->hasMany(Book_image::class);
+        return $this->hasMany(Book_Image::class,'books_id');
     }
 }

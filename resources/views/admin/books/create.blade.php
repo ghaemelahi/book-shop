@@ -7,10 +7,11 @@
             background-color: darkblue;
         }
     </style>
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 @endsection
 @section('content')
-@if ($message = Session::get('not_image'))
+    @if ($message = Session::get('not_image'))
         <div class=" alert alert-danger mt-3"><b>{{ $message }}</b></div>
     @endif
     <section class="content">
@@ -108,8 +109,9 @@
                                                     <div class="form-group">
                                                         <input type="text" required=""
                                                             oninvalid="this.setCustomValidity(' ناشر چاپی کتاب را وارد کنید')"
-                                                            oninput="setCustomValidity('')"
-                                                            class=" form-control" name="print_publisher" value="{{ $action == 'edit' ? $books->print_publisher : old('print_publisher') }}">
+                                                            oninput="setCustomValidity('')" class=" form-control"
+                                                            name="print_publisher"
+                                                            value="{{ $action == 'edit' ? $books->print_publisher : old('print_publisher') }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,8 +148,8 @@
                                                         <input onkeyup="javascript:this.value=separate(this.value);"
                                                             type="text" required=""
                                                             oninvalid="this.setCustomValidity('قیمت نسخه الکترونیک کتاب را انتخاب کنید')"
-                                                            oninput="setCustomValidity('')"
-                                                            class=" form-control" name="electronic_price">
+                                                            oninput="setCustomValidity('')" class=" form-control"
+                                                            name="electronic_price">
                                                     </div>
                                                 </div>
                                             </div>
@@ -155,22 +157,18 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="description" class="star">توضیحات</label>
-                                                    <textarea name="description" required=""
-                                                    oninvalid="this.setCustomValidity('توضیحات کتاب را انتخاب کنید')"
-                                                    oninput="setCustomValidity('')" id="description" rows="5" class=" form-control"
+                                                    <textarea name="description" required="" oninvalid="this.setCustomValidity('توضیحات کتاب را انتخاب کنید')"
+                                                        oninput="setCustomValidity('')" id="description" rows="5" class=" form-control"
                                                         onkeyup="javascript:this.value=separate(this.value);">{{ $action == 'edit' ? $books->description : old('description') }}</textarea>
                                                 </div>
                                             </div>
-                                            <hr />
                                             <div class="col-md-6"></div>
                                             <div class="w-100 mr-1 mt-4 mb-4">
                                                 <div class="form-group">
-                                                    <label for="book_photo">بارگذاری تصاویر کتاب</label>
-                                                    <div class="input-group">
-                                                        <input type="hidden" name="path_image[]" id="book_photo" />
-                                                        <div class="col-md-12">
-                                                            <div id="book_photo_dropzone" class="dropzone form-control">
-                                                            </div>
+                                                    <label for="image_book">بارگذاری تصاویر کتاب</label>
+                                                    <input type="hidden" name="image_book[]" id="image_book" />
+                                                    <div class="col-md-12">
+                                                        <div id="photo_dropzone" class="dropzone form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -205,12 +203,13 @@
             return y + z;
         }
     </script>
-    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
     <script>
-        Dropzone.autoDiscover = false;
+        Dropzone.autoDiscover = true;
         var photoList = [];
-        var drop = new Dropzone('#book_photo_dropzone', {
+        var drop = new Dropzone('#photo_dropzone', {
             addRemoveLinks: true,
+            dictRemoveFile: "حذف عکس", 
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
             url: "{{ route('dropzone') }}",
             sending: function(file, xhr, formData) {
                 formData.append("_token", "{{ csrf_token() }}");
@@ -220,6 +219,8 @@
 
             }
         });
-        console.log(drop);
+        productGallery = function() {
+            document.getElementById('image_book').value = photoList;
+        }
     </script>
 @endsection

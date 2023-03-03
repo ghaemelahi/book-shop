@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Book_image extends Model
+class Book_Image extends Model
 {
     use HasFactory;
-    protected $fillable = ['path_image'];
+    // protected $fillable = ['path_image', 'book_id'];
 
-    protected $table = ['book_images'];
-    
+    // protected $table = ['book_images'];
+
     // protected $casts = ['images' => 'array'];
 
-    public function book()
-    {
-        $this->belongsTo(Books::class,'book_id');
-    }
+    // public function book()
+    // {
+    //     return $this->belongsTo(Books::class);
+    // }
 }

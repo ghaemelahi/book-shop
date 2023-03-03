@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Polyfill\Uuid\Uuid;
 
 class BooksController extends Controller
 {
@@ -20,7 +21,7 @@ class BooksController extends Controller
     {
         $books = Books::orderBy('created_at', 'desc')->paginate(50);
         $count_books = Books::count();
-        return view('admin.books.list', compact(['books','count_books']));
+        return view('admin.books.list', compact(['books', 'count_books']));
     }
 
     /**
@@ -80,18 +81,24 @@ class BooksController extends Controller
             'print_publisher' => $request->print_publisher,
             'year_of_publication' => change_date($request->year_of_publication),
             'format_book' => $request->format_book,
-            'electronic_price' => str_replace(',','',$request->electronic_price),
+            'electronic_price' => str_replace(',', '', $request->electronic_price),
             'description' => $request->description,
         ]);
-        dd($request->path_image);
-        if($request->path_image[0]!=null) {
-			$images = explode(',', $request->path_image[0]);
-			$book->images()->sync($images);
-            // 'book_id'=>$book->id;
-		}elseif($request->path_image[0]==null){
-            return redirect()->route('books.create')->with('not_image','عکس نیست 😔😕🥺');
-        }
+        $explode = explode(',',$request->image_book[0]);
+        $book->images()->attach($explode);
+        // $photo = new Book_image();
+        // $photo->book_id = $book->id;
+
+        // dd($request->path_image);
+        // if ($request->path_image[0] != null) {
+        //     $images = explode(',', $request->path_image[0]);
+        //     $book->images()->attach($images);
         
+        //     // 'book_id'=>$book->id;
+        // }elseif($request->path_image[0]==null){
+        //     return redirect()->route('books.create')->with('not_image','عکس نیست 😔😕🥺');
+        // }
+
         return redirect()->route('books.index')->with('success', 'کتاب ' . $request->book_name . ' با موفقیت اضافه شد');
     }
 

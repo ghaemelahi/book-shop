@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Image;
+use App\Models\Book_Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -63,7 +63,7 @@ class ImageController extends Controller
         $month = $v->month;
         $path = 'images/' . $year . '/' . $month;
         $file->move($path, $name);
-        $photo = new Image();
+        $photo = new Book_Image();
         $photo->type = $request->type;
         $photo->path = $path . '/' . $name;
         $photo->save();
