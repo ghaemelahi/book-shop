@@ -73,9 +73,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
         $user = User::find($id);
         $user->update([
-            'rolse'=>$request->rolse,
+            'roles'=>$request->roles,
         ]);
         return redirect()->route('users.index')->with('update','سمت کاربر با موفقیت تغیر یافت');
     }
@@ -89,7 +90,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $user->delete();
-        return redirect()->route('users.index')->with('delete','کاربر با موفقیت حذف شد');
+        if($user->roles == 'admin'){
+            return redirect()->route('users.index')->with('delete',' ادمین سامانه '.$user->name.' را نمی توان حذف کرد ');
+        }elseif($user->roles == 'user'){
+            $user->delete();
+            return redirect()->route('users.index')->with('delete',' کاربر '.$user->name. ' با موفقیت حذف شد ');
+        }
     }
 }

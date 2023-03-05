@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('book__images', function (Blueprint $table) {
             $table->id();
             $table->string('path_image')->comment('عکس های کتاب');
-            // $table->unsignedBigInteger('books_id')->nullable();
-            // $table->foreign('books_id')->references('id')->on('books');
+            $table->unsignedBigInteger('books_id');
+            $table->foreign('books_id')->references('id')->on('books');
             $table->timestamps();
         });
     }

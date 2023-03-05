@@ -87,7 +87,13 @@
                                                         oninput="setCustomValidity('')" class=" form-control select2"
                                                         name="status" id="status">
                                                         <option selected disabled>انتخاب کنید</option>
-                                                        {{-- <option value="">{{get_status_pay_book($books->id)}}</option> --}}
+                                                        @if ($action == 'edit')
+                                                            @foreach ($books as $book)
+                                                                <option value="{{ $book->status }}">
+                                                                    {{ get_status_pay_book($books->id) }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
                                                         <option value="pay_and_trust">پرداخت و امانت</option>
                                                         <option value="pay">پرداخت</option>
                                                         <option value="trust">امانت گرفتن</option>
@@ -100,7 +106,8 @@
                                                     <input type="text" autocomplete="off" type="text"
                                                         class="custom-field form-control" required=""
                                                         oninvalid="this.setCustomValidity(' نام مترجم کتاب را وارد کنید')"
-                                                        oninput="setCustomValidity('')" id="translator" name="translator">
+                                                        oninput="setCustomValidity('')" id="translator" name="translator"
+                                                        value="{{ $action == 'edit' ? $books->translator : old('translator') }}">
                                                 </div>
                                             </div>
                                             <div class=" col-md-3">
@@ -123,7 +130,7 @@
                                                             oninvalid="this.setCustomValidity(' سال انتشار کتاب را وارد کنید')"
                                                             oninput="setCustomValidity('')"
                                                             class=" form-control observer-example"
-                                                            name="year_of_publication">
+                                                            name="year_of_publication"value="{{ $action == 'edit' ? Hekmatinasser\Verta\Verta::instance($books->year_of_publication)->formatJalaliDate() : old('year_of_publication') }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -149,7 +156,8 @@
                                                             type="text" required=""
                                                             oninvalid="this.setCustomValidity('قیمت نسخه الکترونیک کتاب را انتخاب کنید')"
                                                             oninput="setCustomValidity('')" class=" form-control"
-                                                            name="electronic_price">
+                                                            name="electronic_price"
+                                                            value="{{ $action == 'edit' ? number_format($books->electronic_price) : old('electronic_price') }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -165,28 +173,32 @@
                                             <div class="col-md-6"></div>
                                             <div class="w-100 mr-1 mt-4 mb-4">
                                                 <div class="form-group">
-                                                    <label for="image_book">بارگذاری تصاویر کتاب</label>
-                                                    <input type="hidden" name="image_book[]" id="image_book" />
-                                                    <div class="col-md-12">
-                                                        <div id="photo_dropzone" class="dropzone form-control">
-                                                        </div>
-                                                    </div>
+                                                    <label for="path_image">بارگذاری تصاویر کتاب</label>
+                                                    <input type="hidden" name="path_image[]" id="path_image" />
+                                                </div>
+                                            </div>
+                                            <div id="test">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div id="photo_dropzone" class="dropzone form-control">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer col-md-12">
-                                        <button type="submit" name="create"
-                                            class="btn btn-success btn-lg float-left">ذخیره</button>
-                                    </div>
-                                </form>
                             </div>
-
                         </div>
+                        <div class="card-footer col-md-12">
+                            <button type="submit" name="create"
+                                class="btn btn-success btn-lg float-left">ذخیره</button>
+                        </div>
+                        </form>
                     </div>
+
                 </div>
-            </section>
         </div>
+        </div>
+    </section>
+    </div>
     </section>
 @endsection
 @section('script')
@@ -204,23 +216,27 @@
         }
     </script>
     <script>
-        Dropzone.autoDiscover = true;
+        Dropzone.autoDiscover = false;
         var photoList = [];
         var drop = new Dropzone('#photo_dropzone', {
             addRemoveLinks: true,
-            dictRemoveFile: "حذف عکس", 
+            dictRemoveFile: "حذف عکس",
             acceptedFiles: ".jpeg,.jpg,.png,.gif",
             url: "{{ route('dropzone') }}",
             sending: function(file, xhr, formData) {
                 formData.append("_token", "{{ csrf_token() }}");
             },
             success: function(file, response) {
-                photoList.push(response.id)
-
+                photoList.push(response);
+                console.log('response :>> ', response);
+                // console.log(photoList , "teset drop");
+                $('#test').append("<input type='hidden' name='path_image_book[]' value=" + response[
+                    'path_image'] + " />");
             }
         });
+
         productGallery = function() {
-            document.getElementById('image_book').value = photoList;
+            document.getElementById('path_image').value = photoList;
         }
     </script>
 @endsection

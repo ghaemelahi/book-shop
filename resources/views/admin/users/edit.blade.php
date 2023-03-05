@@ -18,20 +18,19 @@
                 <!-- general form elements -->
                 <div class="card card-danger">
                     <div class="card-header">
-                        <h3 class="card-title">{{$users->name}}تغیر سِمَت کاربری</h3>
+                        <h3 class="card-title">{{$users->name}}  سِمَت کنونی :{{get_type_role_users($users->id)}}</h3>
                     </div>
-                    <form role="form" action="{{uoute('users.update',$users->id)}}" method="POST">
+                    <form role="form" action="{{route('users.update',$users->id)}}" method="POST">
                         @csrf
                         @method('PATCH')
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="rolse" class="star">سِمَت کاربر</label>
-                                        <select required="" oninvalid="this.setCustomValidity(' سِمَت کاربر را وارد کنید')" oninput="setCustomValidity('')" class="form-control" id="rolse" name="rolse">
-                                            <option selected="" disabled="">انتخاب کنید...</option>
-                                            <option value="boss">مدیریت</option>
-                                            <option value="writer">نویسنده</option>
+                                        <label for="roles" class="star">سِمَت کاربر</label>
+                                        <select required="" oninvalid="this.setCustomValidity(' سِمَت کاربر را وارد کنید')" oninput="setCustomValidity('')" class="form-control select2" id="roles" name="roles">
+                                            <option selected="" disabled="">...انتخاب کنید</option>
+                                            <option value="admin">مدیریت</option>
                                             <option value="user">کاربر معمولی</option>
                                         </select>
                                     </div>

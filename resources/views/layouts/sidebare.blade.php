@@ -1,4 +1,4 @@
-<a href="#" class="brand-link">
+<a href="{{ Route('home') }}" class="brand-link">
     <img src="{{ asset('dist/img/avatar5.png') }}" alt="AdminLTE Logo" class="brand-image img-rounded elevation-3"
         style="opacity: 1;">
     <span class="brand-text font-weight-light text-white">پنل مدیریت</span>
@@ -10,7 +10,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 mr-2 d-flex">
             <div class="info">
-                <a href="#" class="d-block text-white">قائم الهی مقدم ( مدیریت )</a>
+                <a href="#" class="d-block text-white">{{auth()->user()->name}} {{get_type_role_users(auth()->user()->id)}}</a>
             </div>
         </div>
 

@@ -30,7 +30,6 @@
                         <th>شماره تماس</th>
                         <th>ایمیل</th>
                         <th>نام کاربری</th>
-                        <th>رمز عبور</th>
                         <th>IP</th>
                         <th>نقش کاربری</th>
                         <th width="10%">عملیات</th>
@@ -44,9 +43,8 @@
                             <td>{{ $user->phone }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->username }}</td>
-                            <td>{{ $user->password }}</td>
                             <td>{{ $user->IP }}</td>
-                            <td>{{ $user->rolse }}</td>
+                            <td>{{ get_type_role_users($user->id) }}</td>
                             <td>
                                 <div class="d-flex">
                                     <a class="btn btn-warning btn-sm ml-2 d-flex align-items-center"

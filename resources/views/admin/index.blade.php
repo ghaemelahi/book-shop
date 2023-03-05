@@ -36,7 +36,7 @@
                     <!-- small box -->
                     <div class="small-box bg-info-gradient">
                         <div class="inner">
-                            <h3>65</h3>
+                            <h3>{{$users}}</h3>
 
                             <p>کاربران</p>
                         </div>
@@ -51,7 +51,7 @@
                     <!-- small box -->
                     <div class="small-box bg-primary-gradient">
                         <div class="inner">
-                            <h3>150</h3>
+                            <h3>{{$books}}</h3>
 
                             <p>کتاب ها</p>
                         </div>
@@ -67,7 +67,7 @@
                     <!-- small box -->
                     <div class="small-box bg-success-gradient">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px"></sup></h3>
+                            <h3>{{$orders}}<sup style="font-size: 20px"></sup></h3>
 
                             <p>سفارشات</p>
                         </div>
@@ -83,7 +83,7 @@
                     <!-- small box -->
                     <div class="small-box bg-warning-gradient text-white">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>{{$payments}}</h3>
 
                             <p>پرداختی ها</p>
                         </div>
@@ -99,7 +99,7 @@
                     <!-- small box -->
                     <div class="small-box bg-danger-gradient">
                         <div class="inner">
-                            <h3>65</h3>
+                            <h3>{{$trusts}}</h3>
 
                             <p>کتاب های امانتی</p>
                         </div>

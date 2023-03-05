@@ -4,6 +4,7 @@ use App\Models\Books;
 use Hekmatinasser\Verta\Verta;
 use App\Models\User;
 use App\Models\PostLike;
+use Illuminate\Support\Facades\Auth;
 
 function convertToEnglish($string)
 {
@@ -89,6 +90,28 @@ function get_status_pay_book($id)
 		$status = 'امانت گرفتن';
 	}
 	return $status;
+}
+function get_type_role_users($id)
+{
+	$roles = User::find($id);
+	$role = '';
+	if ($roles->roles == 'user') {
+		$role = ' (کاربر) ';
+	} elseif ($roles->roles == 'admin') {
+		$role = ' (مدیر) ';
+	}
+	return $role;
+}
+function get_role_users($id)
+{
+	$roles = Auth::user()->id;
+	$role = '';
+	if ($roles->roles == 'user') {
+		$role = ' (کاربر) ';
+	} elseif ($roles->roles == 'admin') {
+		$role = ' (مدیر) ';
+	}
+	return $role;
 }
 
 function get_vehicle_name($name)

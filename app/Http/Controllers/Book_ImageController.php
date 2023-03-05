@@ -17,11 +17,9 @@ class Book_ImageController extends Controller
 		$v = verta();
 		$year = $v->year;
 		$month = $v->month;
-		$path = 'images/' . $year . '/' . $month;
+		$path = 'tamplate/' . $year . '/' . $month;
 		$file->move($path, $name);
-		$photo = new Book_Image();
-		$photo->path_image = $path . '/' . $name;
-		$photo->save();
-		return response()->json(['id' => $photo->id]);
+		$path_image = $path . '/' . $name;
+		return response()->json(['path_image' => $path_image]);
 	}
 }

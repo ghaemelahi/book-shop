@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Hekmatinasser\Verta\Verta;
 use App\Models\Books;
 use App\Http\Controllers\Controller;
+use App\Models\Book_Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Polyfill\Uuid\Uuid;
 
 class BooksController extends Controller
@@ -20,8 +22,12 @@ class BooksController extends Controller
     public function index()
     {
         $books = Books::orderBy('created_at', 'desc')->paginate(50);
-        $count_books = Books::count();
-        return view('admin.books.list', compact(['books', 'count_books']));
+        // $images = Book_Image::where('books_id', $books->id);
+        // $book = Books::find($id);
+        // $book_images = $book->images()
+        //     ->join('book__images', 'book__images.books_id', '=', 'books.id')
+        //     ->get(['path_images']);
+        return view('admin.books.list', compact(['books']));
     }
 
     /**
@@ -43,6 +49,7 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
         // $validator = validator::make($request->all(), [
         //     'book_name' => 'required|min:4',
         //     'book_title' => 'required|min:10',
@@ -84,21 +91,18 @@ class BooksController extends Controller
             'electronic_price' => str_replace(',', '', $request->electronic_price),
             'description' => $request->description,
         ]);
-        $explode = explode(',',$request->image_book[0]);
-        $book->images()->attach($explode);
-        // $photo = new Book_image();
-        // $photo->book_id = $book->id;
-
-        // dd($request->path_image);
-        // if ($request->path_image[0] != null) {
-        //     $images = explode(',', $request->path_image[0]);
-        //     $book->images()->attach($images);
-        
-        //     // 'book_id'=>$book->id;
-        // }elseif($request->path_image[0]==null){
-        //     return redirect()->route('books.create')->with('not_image','عکس نیست 😔😕🥺');
-        // }
-
+        $path_image = $request->path_image_book;
+        $new_date = verta();
+        $month = $new_date->month;
+        $day = $new_date->day;
+        for ($i = 0; $i < sizeof($path_image); $i++) {
+            $photo = new Book_Image();
+            $new_image_path = 'images/' . $month . '/' . $day . '/' . rand(2000, 10000) . '.jpg';
+            Storage::move($path_image[$i], $new_image_path);
+            $photo->path_image = $path_image[$i];
+            $photo->books_id = $book->id;
+            $photo->save();
+        }
         return redirect()->route('books.index')->with('success', 'کتاب ' . $request->book_name . ' با موفقیت اضافه شد');
     }
 
@@ -119,10 +123,12 @@ class BooksController extends Controller
      * @param  \App\Models\Books  $books
      * @return \Illuminate\Http\Response
      */
-    public function edit(Books $books)
+    public function edit($id)
+    // public function edit(Books $books,$id)
     {
         $action = 'edit';
-        // dd($action);
+        $books = Books::find($id);
+        // dd($book->book_name);
         return view('admin.books.create', compact(['action', 'books']));
     }
 
@@ -144,9 +150,11 @@ class BooksController extends Controller
      * @param  \App\Models\Books  $books
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Books $books)
+    public function destroy($id)
     {
-        $books->delete();
-        return redirect()->route('books.index')->with('delete', 'کتاب مورد نظر با موفقیت حذف شد');
+        $book = Books::find($id);
+        $book->id;
+        $book->delete();
+        return redirect()->route('books.index')->with('delete', ' کتاب '.$book->name.' با موفقیت حذف شد ');
     }
 }

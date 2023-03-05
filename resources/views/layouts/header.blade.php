@@ -56,9 +56,15 @@
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fa fa-power-off"></i>
-                    </a>
+                    @if (auth()->check())
+                    <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                        @csrf
+                        <a href="#" class="nav-link" data-toggle="dropdown"
+                            onclick="document.getElementById('logout-form').submit()">
+                            <i class="fa fa-power-off"></i>
+                        </a>
+                    </form>
+                @endif
             </ul>
         </nav>
         <!-- /.navbar -->
