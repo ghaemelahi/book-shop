@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrdersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/',[\App\Http\Controllers\HomebookController::class,'index'])->name('index');
+Route::get('/books',[\App\Http\Controllers\API\BooksController::class,'shopbooks'])->name('books');
+Route::get('/introduction',[\App\Http\Controllers\API\IntrodactionController::class,'introduction'])->name('introduction');
+Route::resource('/orders',OrdersController::class);

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-// import Checkbox from '@/Components/Checkbox';
-// import GuestLayout from '@/Layouts/GuestLayout';
-// import InputError from '@/Components/InputError';
-// import InputLabel from '@/Components/InputLabel';
-// import PrimaryButton from '@/Components/PrimaryButton';
-// import TextInput from '@/Components/TextInput';
+import Checkbox from '@/Components/Checkbox';
+import GuestLayout from '@/Layouts/GuestLayout';
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 
@@ -165,7 +165,7 @@ const Login = ({ status, canResetPassword }) => {
                     </div>
                 </div>
                 <div className='hidden md:block md:w-5/12 md:h-full'>
-                    <img src="../../../../../../../public/image/blog-1.jpg" className='w-full h-full object-cover ' />
+                    <img src="../../../../../../image/blog-1.jpg" className='w-full h-full object-cover ' />
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrustController;
 use App\Http\Controllers\UserController;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,49 +22,52 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+// Route::get('/', function () {
+//     return Inertia::render('index', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+
+// Route::get('/', function () {
+//     return Inertia::render('Dashboard');
+// });
+
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
+// require __DIR__.'/auth.php';
+// Route::get('/',function(){
+//     return view('index_book');
+// });
+Route::group(['middleware' => 'auth:api', 'perfix' => 'user'], function () {
+    Route::get('/', [\App\Http\Controllers\UserpaneController::class . 'homepage'])->name('index');
+    Route::get('/panel', [\App\Http\Controllers\UserpaneController::class, 'userpanel'])->name('userpanel');
+    Route::get('/addtocart', function () {
+        return view('shop.add_to_cart');
+    });
+});
+Auth::routes();
+Route::group(['middleware' => 'auth', 'prfix' => 'admin'], function () {
+    // Route::get('/', function () {
+    //     return view('admin.index');
+    // });
+    Route::resource('/users', UserController::class);
+    Route::resource('/books', BooksController::class);
+    Route::resource('/orders', OrdersController::class);
+    Route::resource('/payments', PaymentsController::class);
+    Route::resource('/trusts', TrustController::class);
+    Route::post('dropzone', [\App\Http\Controllers\Book_ImageController::class, 'dropzoneUpload'])->name('dropzone');
+
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
-Route::get('/', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::fallback(function () {
+    return view('notfound');
 });
-
-require __DIR__.'/auth.php';
-// Route::get('/',[\App\Http\Controllers\UserpaneController::class.'homepage'])->name('index');
-// Route::get('/userpanel',[\App\Http\Controllers\UserpaneController::class,'userpanel'])->name('userpanel');
-// Route::get('/addtocart',function(){
-//     return view('shop.add_to_cart');
-// });
-// Auth::routes();
-// Route::group(['middleware'=>'auth','prfix'=>'admin'],function () {
-//     Route::get('/', function () {
-//         return view('admin.index');
-//     });
-//     Route::resource('/users',UserController::class);
-//     Route::resource('/books', BooksController::class);
-//     Route::resource('/orders',OrdersController::class);
-//     Route::resource('/payments',PaymentsController::class);
-//     Route::resource('/trusts',TrustController::class);
-//     // Route::post('attach', [\App\Http\Controllers\ImageController::class,'attach'])->name('image.attach');
-//     // Route::post('ck_upload', [\App\Http\Controllers\ImageController::class,'ck_upload'])->name('image.ck_upload');
-//     Route::post('dropzone', [\App\Http\Controllers\ImageController::class, 'dropzoneUpload'])->name('dropzone');
-
-//     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// });
-
-// Route::fallback(function () {
-//     return view('notfound');
-// });

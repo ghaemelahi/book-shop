@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Polyfill\Uuid\Uuid;
+use illuminate\Support\Facades\DB;
 
 class BooksController extends Controller
 {
@@ -49,7 +50,7 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        // return $request;
         // $validator = validator::make($request->all(), [
         //     'book_name' => 'required|min:4',
         //     'book_title' => 'required|min:10',
@@ -128,8 +129,8 @@ class BooksController extends Controller
     {
         $action = 'edit';
         $books = Books::find($id);
-        // dd($book->book_name);
-        return view('admin.books.create', compact(['action', 'books']));
+        $status = get_status_pay_book($books->id);
+        return view('admin.books.create', compact(['action', 'books','status']));
     }
 
     /**
@@ -152,9 +153,17 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        $book = Books::find($id);
-        $book->id;
-        $book->delete();
-        return redirect()->route('books.index')->with('delete', ' کتاب '.$book->name.' با موفقیت حذف شد ');
+        
+        $images = DB::table('book__images')
+            ->select('path_image')
+            ->where('book_id', $id)
+            ->get();
+        for ($i = 0; $i < sizeof($images); $i++) {
+            Storage::delete($images[$i]);
+        }
+        
+        Books::where('id',$id)->delete();
+
+        return redirect()->route('books.index')->with('delete', 'کتاب با موفقیت حذف شد');
     }
 }

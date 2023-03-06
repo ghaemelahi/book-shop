@@ -23,6 +23,7 @@ class User extends Authenticatable
         'phone',
         'username',
         'password',
+        'api_token',
         'IP',
         'roles',
     ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Orders;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -37,7 +38,24 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = validator::make($request->all(), [
+            'user_id' => 'required',
+            'book_id' => 'required',
+            'payment_id' => 'required',
+            'total_prices' => 'required',
+            'type_pay' => 'required',
+        ]);
+        if($validator->fails()){
+            return redirect()->back();
+        }
+        $orders =  Orders::create([
+            'user_id' => auth()->user()->id,
+            'book_id' => $request->book_id,
+            'payment_id' => $request->payment_id,
+            'total_prices' => $request->total_prices,
+            'type_pay' => $request->type_pay,
+        ]);
+        return $orders;
     }
 
     /**

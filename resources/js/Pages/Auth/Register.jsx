@@ -188,7 +188,7 @@ const Register = () => {
                 </div>
             </div>
             <div className='hidden md:block md:w-5/12 md:h-full'>
-                <img src='../../public/image/register.jpg' className='w-full h-full object-cover ' />
+                <img src='../../../../../../image/book-5.png' className='w-full h-full object-cover ' />
             </div>
         </div>
     )

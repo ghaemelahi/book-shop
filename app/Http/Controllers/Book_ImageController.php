@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Book_Image;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class Book_ImageController extends Controller
 {

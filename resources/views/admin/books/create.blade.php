@@ -86,27 +86,28 @@
                                                         oninvalid="this.setCustomValidity('نوع پرداخت را انتخاب کنید')"
                                                         oninput="setCustomValidity('')" class=" form-control select2"
                                                         name="status" id="status">
-                                                        <option selected disabled>انتخاب کنید</option>
                                                         @if ($action == 'edit')
-                                                            @foreach ($books as $book)
-                                                                <option value="{{ $book->status }}">
-                                                                    {{ get_status_pay_book($books->id) }}
-                                                                </option>
-                                                            @endforeach
+                                                            <option
+                                                                value="{{ $action == 'edit' ? $books->status : old('status') }}"selected
+                                                                disabled>{{ $status }}</option>
+                                                            <option value="pay_and_trust">پرداخت و امانت</option>
+                                                            <option value="pay">پرداخت</option>
+                                                            <option value="trust">امانت گرفتن</option>
+                                                        @else
+                                                            <option selected disabled>انتخاب کنید</option>
+                                                            <option value="pay_and_trust">پرداخت و امانت</option>
+                                                            <option value="pay">پرداخت</option>
+                                                            <option value="trust">امانت گرفتن</option>
                                                         @endif
-                                                        <option value="pay_and_trust">پرداخت و امانت</option>
-                                                        <option value="pay">پرداخت</option>
-                                                        <option value="trust">امانت گرفتن</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="translator" class="star">مترجم</label>
+                                                    <label for="translator" class="">مترجم (درصورت داشتن مترجم)
+                                                    </label>
                                                     <input type="text" autocomplete="off" type="text"
-                                                        class="custom-field form-control" required=""
-                                                        oninvalid="this.setCustomValidity(' نام مترجم کتاب را وارد کنید')"
-                                                        oninput="setCustomValidity('')" id="translator" name="translator"
+                                                        class="custom-field form-control" id="translator" name="translator"
                                                         value="{{ $action == 'edit' ? $books->translator : old('translator') }}">
                                                 </div>
                                             </div>
@@ -141,9 +142,17 @@
                                                         oninvalid="this.setCustomValidity('فرمت کتاب را انتخاب کنید')"
                                                         oninput="setCustomValidity('')" class=" form-control select2"
                                                         name="format_book" id="">
-                                                        <option selected disabled>انتخاب کنید</option>
-                                                        <option value="pdf">PDF</option>
-                                                        <option value="word">Word</option>
+                                                        @if ($action == 'edit')
+                                                        <option
+                                                                value="{{ $action == 'edit' ? $books->format_book : old('format_book') }}"selected
+                                                                disabled>{{ $books->format_book }}</option>
+                                                                <option value="pdf">PDF</option>
+                                                                <option value="word">Word</option>
+                                                        @else
+                                                            <option selected disabled>انتخاب کنید</option>
+                                                            <option value="pdf">PDF</option>
+                                                            <option value="word">Word</option>
+                                                        @endif
                                                     </select>
                                                 </div>
                                             </div>
