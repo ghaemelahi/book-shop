@@ -5,7 +5,7 @@
         <div class=" alert alert-success mt-3"><b>{{ $message }}</b></div>
     @endif
     @if ($message = Session::get('update'))
-        <div class=" alert alert-success mt-3"><b>{{ $message }}</b></div>
+        <div class=" alert alert-primary mt-3"><b>{{ $message }}</b></div>
     @endif
     @if ($message = Session::get('delete'))
         <div class="alert alert-danger mt-3"><b>{{ $message }}</b></div>
@@ -94,10 +94,6 @@
                                                                 <tr>
                                                                     <td>توضیحات</td>
                                                                     <td>{{ $book->description }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>عکس کتاب</td>
-                                                                    <td>.......</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

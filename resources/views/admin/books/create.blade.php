@@ -37,11 +37,11 @@
                                     <h3 class="card-title">{{ $action == 'edit' ? 'فرم ویرایش کتاب' : 'فرم ایجاد کتاب' }}
                                     </h3>
                                 </div>
-                                <form role="form"
-                                    action="{{ $action == 'edit' ? route('books.edit', $books->id) : route('books.store') }}"
-                                    method="POST" enctype="multipart/form-data">
+                                <form role="form" method="POST"
+                                    action="{{ $action == 'edit' ? route('books.update', $books->id) : route('books.store') }}"
+                                    enctype="multipart/form-data">
                                     @if ($action == 'edit')
-                                        @method('PATH')
+                                        @method('PATCH')
                                     @else
                                         @method('POST')
                                     @endif
@@ -89,7 +89,7 @@
                                                         @if ($action == 'edit')
                                                             <option
                                                                 value="{{ $action == 'edit' ? $books->status : old('status') }}"selected
-                                                                disabled>{{ $status }}</option>
+                                                                >{{ $status }} (انتخاب شده) </option>
                                                             <option value="pay_and_trust">پرداخت و امانت</option>
                                                             <option value="pay">پرداخت</option>
                                                             <option value="trust">امانت گرفتن</option>
@@ -123,18 +123,34 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class=" col-md-3">
-                                                <div class=" form-group">
-                                                    <label for="year_of_publication" class="star">سال انتشار</label>
-                                                    <div class="form-group">
-                                                        <input type="text" required=""
-                                                            oninvalid="this.setCustomValidity(' سال انتشار کتاب را وارد کنید')"
-                                                            oninput="setCustomValidity('')"
-                                                            class=" form-control observer-example"
-                                                            name="year_of_publication"value="{{ $action == 'edit' ? Hekmatinasser\Verta\Verta::instance($books->year_of_publication)->formatJalaliDate() : old('year_of_publication') }}">
+                                            @if ($action == 'edit')
+                                                <div class=" col-md-3">
+                                                    <div class=" form-group">
+                                                        <label for="year_of_publication" class="star">سال انتشار</label>
+                                                        <div class="form-group">
+                                                            <input type="text" required=""
+                                                                oninvalid="this.setCustomValidity(' سال انتشار کتاب را وارد کنید')"
+                                                                oninput="setCustomValidity('')"
+                                                                class=" form-control observer-example"
+                                                                name="year_of_publication"
+                                                                value="{{ $books->year_of_publication }}">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @else
+                                                <div class=" col-md-3">
+                                                    <div class=" form-group">
+                                                        <label for="year_of_publication" class="star">سال انتشار</label>
+                                                        <div class="form-group">
+                                                            <input type="text" required=""
+                                                                oninvalid="this.setCustomValidity(' سال انتشار کتاب را وارد کنید')"
+                                                                oninput="setCustomValidity('')"
+                                                                class=" form-control observer-example"
+                                                                name="year_of_publication" value="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="format_book" class="star">فرمت کتاب</label>
@@ -143,11 +159,11 @@
                                                         oninput="setCustomValidity('')" class=" form-control select2"
                                                         name="format_book" id="">
                                                         @if ($action == 'edit')
-                                                        <option
+                                                            <option
                                                                 value="{{ $action == 'edit' ? $books->format_book : old('format_book') }}"selected
-                                                                disabled>{{ $books->format_book }}</option>
-                                                                <option value="pdf">PDF</option>
-                                                                <option value="word">Word</option>
+                                                                >{{ $books->format_book }}(انتخاب شده)</option>
+                                                            <option value="pdf">PDF</option>
+                                                            <option value="word">Word</option>
                                                         @else
                                                             <option selected disabled>انتخاب کنید</option>
                                                             <option value="pdf">PDF</option>

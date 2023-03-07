@@ -130,7 +130,8 @@ class BooksController extends Controller
         $action = 'edit';
         $books = Books::find($id);
         $status = get_status_pay_book($books->id);
-        return view('admin.books.create', compact(['action', 'books','status']));
+        $date = change_date_to_jalali($books->year_of_publication);
+        return view('admin.books.create', compact(['action', 'books', 'status', 'date']));
     }
 
     /**
@@ -140,9 +141,37 @@ class BooksController extends Controller
      * @param  \App\Models\Books  $books
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Books $books)
+    public function update(Request $request, $id)
     {
-        // 
+        // dd($request);
+        $books = Books::find($id);
+        $books->update([
+            'book_name' => $request->book_name,
+            'book_title' => $request->book_title,
+            'book_writer' => $request->book_writer,
+            'status' => $request->status,
+            'translator' => $request->translator,
+            'print_publisher' => $request->print_publisher,
+            'year_of_publication' => change_date($request->year_of_publication),
+            'format_book' => $request->format_book,
+            'electronic_price' => str_replace(',', '', $request->electronic_price),
+            'description' => $request->description,
+        ]);
+        if ($request->path_image[0]!=null) {
+            $path_image = $request->path_image_book;
+            $new_date = verta();
+            $month = $new_date->month;
+            $day = $new_date->day;
+            for ($i = 0; $i < sizeof($path_image); $i++) {
+                $photo = new Book_Image();
+                $new_image_path = 'images/' . $month . '/' . $day . '/' . rand(2000, 10000) . '.jpg';
+                Storage::move($path_image[$i], $new_image_path);
+                $photo->path_image = $path_image[$i];
+                $photo->books_id = $books->id;
+                $photo->save();
+            }
+        }
+        return redirect()->route('books.index')->with('update', $request->book_name .' با موفقیت بروزرسانی شد ');
     }
 
     /**
@@ -153,7 +182,7 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        
+
         $images = DB::table('book__images')
             ->select('path_image')
             ->where('book_id', $id)
@@ -161,8 +190,8 @@ class BooksController extends Controller
         for ($i = 0; $i < sizeof($images); $i++) {
             Storage::delete($images[$i]);
         }
-        
-        Books::where('id',$id)->delete();
+
+        Books::where('id', $id)->delete();
 
         return redirect()->route('books.index')->with('delete', 'کتاب با موفقیت حذف شد');
     }
