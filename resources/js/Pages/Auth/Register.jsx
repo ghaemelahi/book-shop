@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-// import GuestLayout from '@/Layouts/GuestLayout';
-// import InputError from '@/Components/InputError';
-// import InputLabel from '@/Components/InputLabel';
-// import PrimaryButton from '@/Components/PrimaryButton';
-// import TextInput from '@/Components/TextInput';
+import GuestLayout from '@/Layouts/GuestLayout';
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 // export default function Register() {
@@ -131,6 +131,7 @@ const Register = () => {
         name: '',
         email: '',
         password: '',
+        phone:'',
         password_confirmation: '',
     });
 
@@ -160,24 +161,24 @@ const Register = () => {
                     <h1 className='font-bold text-3xl mx-auto py-4'>فرم ثبت نام</h1>
                     <form onClick={submit} className='w-full py-6 px-2 flex flex-col items-center'>
                         <div className='form-group w-full flex flex-col md:flex-row items-center justify-center my-2 gap-3'>
-                            <input type="text" className='rounded-md text-lg py-2 w-9/12 px-3 outline-none border-2 focus:ring-2 focus:ring-green-500' placeholder='نام کاربری' />
-                            <input type="email" className='rounded-md text-lg py-2 w-9/12 px-3 outline-none border-2 focus:ring-2 focus:ring-green-500' placeholder='ایمیل' />
+                            <input type="email" className='rounded-md text-lg py-2 w-9/12 px-3 outline-none border-2 focus:ring-2 text-right focus:ring-green-500' placeholder='ایمیل' />
+                            <input type="text" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 focus:ring-2 text-right focus:ring-green-500' placeholder='نام و نام خانوادگی' />
                         </div>
 
                         <div className='form-group w-full flex flex-col md:flex-row items-center justify-center my-2 gap-3'>
-                            <input type="text" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 focus:ring-2 focus:ring-green-500' placeholder='نام و نام خانوادگی' />
-                            <input type="text" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 focus:ring-2 focus:ring-green-500' placeholder='شماره تماس(اختیاری)' />
+                            <input type="text" className='rounded-md text-lg py-2 w-9/12 px-3 outline-none border-2 focus:ring-2 text-right focus:ring-green-500' placeholder='نام کاربری' />
+                            <input type="tel" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 focus:ring-2 text-right focus:ring-green-500' placeholder='شماره تماس' />
 
                         </div>
 
                         <div className='form-group w-full flex flex-col md:flex-row items-center justify-center my-2 gap-3'>
-                            <input type="text" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 focus:ring-2 focus:ring-green-500' placeholder='رمز عبور' />
-                            <input type="text" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 focus:ring-2 focus:ring-green-500' placeholder='تکرار رمز عبور' />
+                            <input type="password" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 focus:ring-2 text-right focus:ring-green-500' placeholder='تکرار رمز عبور' />
+                            <input type="password" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 focus:ring-2 text-right focus:ring-green-500' placeholder='رمز عبور' />
                         </div>
 
-                        <div className='form-group w-9/12 flex items-center justify-center my-4'>
+                        <div className='form-group w-9/12 flex flex-row-reverse my-4'>
                             <input onChange={handleOnChange} type="checkbox" className='w-4 h-4' />
-                            <span className='mx-2 text-sm'>مرا به خاطر بسپار</span>
+                            <span className='mx-2 text-right text-sm'>مرا به خاطر بسپار</span>
                         </div>
                         <button type='submit' className='bg-green-500 text-white font-bold rounded-md w-8/12 
           py-3 transition-all my-4 hover:bg-green-600'>ثبت نام</button>

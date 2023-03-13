@@ -104,7 +104,7 @@ class BooksController extends Controller
             $photo->books_id = $book->id;
             $photo->save();
         }
-        return redirect()->route('books.index')->with('success', 'کتاب ' . $request->book_name . ' با موفقیت اضافه شد');
+        return redirect()->route('books.index')->with('success', $request->book_name . ' با موفقیت اضافه شد ');
     }
 
     /**

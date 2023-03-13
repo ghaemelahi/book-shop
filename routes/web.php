@@ -32,7 +32,7 @@ use Inertia\Inertia;
 // });
 
 // Route::get('/', function () {
-//     return Inertia::render('Dashboard');
+//     return Inertia::render('App');
 // });
 
 
@@ -43,9 +43,9 @@ use Inertia\Inertia;
 // });
 
 // require __DIR__.'/auth.php';
-// Route::get('/',function(){
-//     return view('index_book');
-// });
+Route::get('/',function(){
+    return view('welcome');
+});
 Route::group(['middleware' => 'auth:api', 'perfix' => 'user'], function () {
     Route::get('/', [\App\Http\Controllers\UserpaneController::class . 'homepage'])->name('index');
     Route::get('/panel', [\App\Http\Controllers\UserpaneController::class, 'userpanel'])->name('userpanel');
@@ -71,3 +71,4 @@ Route::group(['middleware' => 'auth', 'prfix' => 'admin'], function () {
 Route::fallback(function () {
     return view('notfound');
 });
+

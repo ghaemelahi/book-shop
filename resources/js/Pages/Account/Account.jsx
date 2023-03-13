@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import AccountDetails from "./AccountDetails";
-import AccountSidebar from "./AccountSidebar";
-import BorrowedBook from "./BorrowedBook";
-import Dashboard from "./Dashboard";
-import DownloadedBook from "./DownloadedBook";
-import OrdersBook from "./OrdersBook";
-import AccountHeader from "./AccountHeader";
+import AccountDetails from "@AccountDetails";
+import AccountSidebar from "@AccountSidebar";
+import BorrowedBook from "@BorrowedBook";
+import Dashboard from "@Dashboard";
+import DownloadedBook from "@DownloadedBook";
+import OrdersBook from "@OrdersBook";
+import AccountHeader from "@AccountHeader";
 
 const Account = () => {
 

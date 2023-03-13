@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class HomebookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // $book_image = Book_Image::get()->where('books_id', $books->id);
         // $book_image = Book_Image::where(function (Builder $query) {
@@ -38,6 +38,10 @@ class HomebookController extends Controller
         ])
         ->selectRaw('(select book__images.path_image from book__images where books_id = books.id limit 1) as path_image')
         ->get();
-        return $books;
+        // $value = $request->header('Access-Control-Allow-Origin', '*');
+        return response($books)
+        ->header("Access-Control-Allow-Origin", config('cors.allowed_origins'))
+        ->header("Access-Control-Allow-Methods", config('cors.allowed_methods'));
+        
     }
 }

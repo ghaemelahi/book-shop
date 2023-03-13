@@ -22,3 +22,4 @@ Route::get('/',[\App\Http\Controllers\HomebookController::class,'index'])->name(
 Route::get('/books',[\App\Http\Controllers\API\BooksController::class,'shopbooks'])->name('books');
 Route::get('/introduction',[\App\Http\Controllers\API\IntrodactionController::class,'introduction'])->name('introduction');
 Route::resource('/orders',OrdersController::class);
+Route::post('/login',[\App\Http\Controllers\API\TestApiController::class,'login']);

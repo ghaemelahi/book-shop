@@ -4,8 +4,9 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import TextInput from '@/Compo/nents/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+// import { Link } from 'react-router-dom';
 
 
 // export default function Login({ status, canResetPassword }) {
@@ -96,9 +97,9 @@ import { Head, Link, useForm } from '@inertiajs/react';
 //         </GuestLayout>
 //     );
 // }
-// import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom';
 
-const Login = ({ status, canResetPassword }) => {
+export default function Login({ status, canResetPassword }) {
 
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
@@ -135,15 +136,17 @@ const Login = ({ status, canResetPassword }) => {
                         <form onSubmit={submit
                         } className='w-full py-6 px-2 flex flex-col gap-4 items-center'>
                             <div className='form-group w-full flex flex-col items-center my-2'>
-                                <input value={data.email} onChange={(e) => setData(e.target.value)} type="email" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 focus:ring-2 focus:ring-green-500' placeholder='ایمیل' />
+                                <input name='emial' isFocused={true} value={data.email} autoComplete="username" onChange={(e) => setData(e.target.value)} type="email" className='rounded-md text-lg py-2 px-3 w-9/12 text-right outline-none border-2 focus:ring-2 focus:ring-green-500' placeholder='ایمیل' />
+                                <InputError message={errors.email} className="mt-2" />
                             </div>
 
                             <div className='form-group w-full flex flex-col items-center my-2'>
-                                <input value={data.password} type="text" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 focus:ring-2 focus:ring-green-500' placeholder='رمز عبور' />
+                                <input name='password' value={data.password} type="password" className='rounded-md text-lg py-2 px-3 w-9/12 outline-none border-2 text-right focus:ring-2 focus:ring-green-500' placeholder='رمز عبور' />
+                                <InputError message={errors.password} className="mt-2" />
                             </div>
-                            <div className='form-group w-9/12 flex items-center justify-start my-2'>
-                                <input onChange={handleOnChange} type="checkbox" className='w-4 h-4' />
-                                <span className='mx-2 text-sm'>مرا به خاطر بسپار</span>
+                            <div className='form-group w-9/12 flex items-center justify-start my-2 flex-row-reverse'>
+                                <input name="remember" value={data.remember} onChange={handleOnChange} type="checkbox" className='w-4 h-4' />
+                                <span className='mx-2 text-sm text-right'>مرا به خاطر بسپار</span>
                             </div>
                             <button type='submit' className='bg-green-500 text-white font-bold rounded-md w-8/12 
             py-3 transition-all hover:bg-green-600'>ورود</button>
@@ -172,4 +175,4 @@ const Login = ({ status, canResetPassword }) => {
     )
 }
 
-export default Login
+// export default Login

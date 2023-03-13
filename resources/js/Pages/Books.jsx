@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper"
 import { Link } from "react-router-dom"
-import Book from "../components/Book/Book"
+import Book from "Book/Book"
 
 const Books = () => {
     return (

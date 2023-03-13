@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Books;
 use App\Models\Orders;
 use App\Models\Payment;
 use App\Models\Trust;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -43,5 +43,4 @@ class HomeController extends Controller
             return redirect()->route('userpanel');
         }
     }
-    
 }

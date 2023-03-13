@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -54,8 +52,6 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'username' => ['required', 'string','max:255', 'unique:users'],
-            'phone' => ['required','max:16', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -68,20 +64,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'username' => $data['username'],
-            'phone' => $data['phone'],
-            'IP' => request()->ip(),
             'password' => Hash::make($data['password']),
-            'api_token' => Str::random(60),
         ]);
-        return redirect()->route('login');
-        // if(Auth::user()->roles == 'admin'){
-        //     return redirect()->route('home');
-        // }elseif(Auth::user()->roles == 'user'){
-        //     return view('index');
-        // }
     }
 }
