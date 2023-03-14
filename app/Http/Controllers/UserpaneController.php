@@ -15,7 +15,7 @@ class UserpaneController extends Controller
     {
         if (Auth::user()->roles != 'admin') {
             $count_trust = DB::table('trusts')
-            ->count('');
+            ->count('id');
             return view('index');
         } else {
             return redirect()->route('home');

@@ -48,12 +48,12 @@
                             <td>
                                 <div class="d-flex">
                                     <a class="btn btn-warning btn-sm ml-2 d-flex align-items-center"
-                                        href="{{ route('users.edit', $user->id) }}" data-toggle="tooltip"
+                                        href="{{ route('login.edit', $user->id) }}" data-toggle="tooltip"
                                         data-placement="top" title="" data-original-title="ویرایش"><i
                                             class="fa fa-edit"></i></a>
                                     <div class="display-inline-block">
                                         <form method="POST" class="h-100"
-                                            action="{{ route('users.destroy', $user->id) }}">
+                                            action="{{ route('login.destroy', $user->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button data-toggle="tooltip" data-placement="top" title="حذف"

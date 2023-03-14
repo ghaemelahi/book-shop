@@ -32,7 +32,7 @@ use Inertia\Inertia;
 // });
 
 // Route::get('/', function () {
-//     return Inertia::render('App');
+//     return Inertia::render('Pages/App');
 // });
 
 
@@ -43,21 +43,24 @@ use Inertia\Inertia;
 // });
 
 // require __DIR__.'/auth.php';
-Route::get('/',function(){
-    return view('welcome');
-});
-Route::group(['middleware' => 'auth:api', 'perfix' => 'user'], function () {
+// Route::get('/',function(){
+//     return view('welcome');
+// });
+Route::group(['perfix' => 'user'], function () {
     Route::get('/', [\App\Http\Controllers\UserpaneController::class . 'homepage'])->name('index');
     Route::get('/panel', [\App\Http\Controllers\UserpaneController::class, 'userpanel'])->name('userpanel');
     Route::get('/addtocart', function () {
         return view('shop.add_to_cart');
     });
 });
+// if(!Auth()){
+//     return 'http://localhost:5174/login';
+// }
 Auth::routes();
 Route::group(['middleware' => 'auth', 'prfix' => 'admin'], function () {
-    // Route::get('/', function () {
-    //     return view('admin.index');
-    // });
+    Route::get('/', function () {
+        return view('admin.index');
+    });
     Route::resource('/users', UserController::class);
     Route::resource('/books', BooksController::class);
     Route::resource('/orders', OrdersController::class);
