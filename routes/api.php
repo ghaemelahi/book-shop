@@ -22,7 +22,8 @@ Route::get('/', [\App\Http\Controllers\HomebookController::class, 'index'])->nam
 Route::get('/books', [\App\Http\Controllers\API\BooksController::class, 'shopbooks'])->name('books');
 Route::get('/introduction', [\App\Http\Controllers\API\IntrodactionController::class, 'introduction'])->name('introduction');
 Route::resource('/orders', OrdersController::class);
-Route::group(['middlware' => 'api-session'], function () {
     Route::post('/register', [\App\Http\Controllers\API\AuthUserController::class, 'register']);
     Route::post('/login', [\App\Http\Controllers\API\AuthUserController::class, 'login']);
+    Route::group(['middleware' =>'api_token'], function () {
+    Route::post('/logout', [\App\Http\Controllers\API\AuthUserController::class, 'logout']);
 });

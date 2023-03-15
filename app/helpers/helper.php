@@ -114,6 +114,19 @@ function get_role_users($id)
 	return $role;
 }
 
+function get_info_with_api_token($api_token){
+	if($api_token){
+		$users = User::where('api_token',$api_token)->get();
+		return $users;
+	}
+}
+
+function get_api_token($api_token){
+	if($api_token){
+		auth()->user()->api_token = null;
+	}
+}
+
 function get_vehicle_name($name)
 {
 	$result = "";
