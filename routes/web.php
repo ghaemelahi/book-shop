@@ -57,7 +57,7 @@ Route::group(['perfix' => 'user'], function () {
 //     return 'http://localhost:5174/login';
 // }
 Auth::routes();
-Route::group(['middleware' => 'auth', 'prfix' => 'admin'], function () {
+Route::group(['middleware' => 'api_token', 'prfix' => 'admin'], function () {
     Route::get('/', function () {
         return view('admin.index');
     });

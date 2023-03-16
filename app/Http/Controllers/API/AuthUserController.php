@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 
@@ -127,15 +128,7 @@ class AuthUserController extends Controller
 
     public function logout(Request $request)
     {
-        if (auth()->user()) {
-            $user = auth()->user();
-            $user->api_token == null;
-            $user->save();
-
-            return response()->json([
-                'msg' => 'کاربر گرامی ممنون از اینکه از سامانه ما استفاده کرده اید'
-            ]);
-        }
+        DB::table('users')->where('api_token',$request->api_token)->update(["api_token" , null]);
         return response()->json([
             'error' => 'خروج از سیستم با موفقیت انجام نشد'
         ], 401);

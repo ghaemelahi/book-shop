@@ -21,12 +21,12 @@ class AuthWithApi
     {
         $token = DB::table('users')->select([
             'api_token'
-        ])->get();
-        dd($token);
-        // dd($request->auth_api);
-        // $token = User::where('api_token',$api_token);
-        // if($token){
+        ])
+        ->where('api_token',$request->api_token)
+        ->get();
+        if(DB::table('users')->where('api_token',$request->api_token)->exists()){
             return $next($request);
+        }
         // }
         return url("http://localhost:5174");
     }
