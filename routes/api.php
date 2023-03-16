@@ -25,8 +25,8 @@ Route::get('/introduction', [\App\Http\Controllers\API\IntrodactionController::c
 Route::get('/search', [\App\Http\Controllers\API\SearchController::class, 'search'])->name('search');
 Route::resource('/cart',cartController::class);
 Route::resource('/orders', OrdersController::class);
-    Route::post('/logout', [\App\Http\Controllers\API\AuthUserController::class, 'logout']);
-    Route::post('/register', [\App\Http\Controllers\API\AuthUserController::class, 'register']);
-    Route::post('/login', [\App\Http\Controllers\API\AuthUserController::class, 'login']);
     Route::group(['middleware' =>'api_token'], function () {
+        Route::post('/register', [\App\Http\Controllers\API\AuthUserController::class, 'register']);
+        Route::post('/login', [\App\Http\Controllers\API\AuthUserController::class, 'login']);
+        Route::post('/logout', [\App\Http\Controllers\API\AuthUserController::class, 'logout']);
 });
