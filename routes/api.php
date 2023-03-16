@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomebookController::class, 'index'])->name('index');
 Route::get('/books', [\App\Http\Controllers\API\BooksController::class, 'shopbooks'])->name('books');
 Route::get('/introduction', [\App\Http\Controllers\API\IntrodactionController::class, 'introduction'])->name('introduction');
+Route::get('/search', [\App\Http\Controllers\API\SearchController::class, 'search'])->name('search');
 Route::resource('/cart',cartController::class);
 Route::resource('/orders', OrdersController::class);
     Route::post('/logout', [\App\Http\Controllers\API\AuthUserController::class, 'logout']);
