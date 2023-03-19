@@ -46,6 +46,8 @@ class Kernel extends HttpKernel
             // 'throttle:api',
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Session\Middleware\StartSession::class,
         ],
 
         'api-session'=>[
@@ -74,5 +76,6 @@ class Kernel extends HttpKernel
         'cors' => \App\Http\Middleware\Cors::class, 
         'paths' => ['api/*', 'sanctum/csrf-cookie', 'api'],
         'api_token'=> \App\Http\Middleware\AuthWithApi::class,
+        'check_admin'=> \App\Http\Middleware\RoleUsers::class,
     ];
 }

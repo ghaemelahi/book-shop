@@ -30,7 +30,6 @@ class HomeController extends Controller
     public function index()
     {
         $users_admin = Auth::user()->roles;
-        // dd($users_admin);
         if ($users_admin == 'admin') {
             $users = User::count();
             $books = Books::count();
@@ -38,8 +37,9 @@ class HomeController extends Controller
             $payments = Payment::count();
             $trusts = Trust::count();
             return view('admin.index', compact(['users', 'books', 'orders', 'payments', 'trusts']));
-        } elseif ($users_admin == 'user') {
-            return redirect()->route('userpanel');
+        } 
+        elseif ($users_admin == 'user') {
+            return redirect()->url('http://localhost:5173');
         }
     }
 }

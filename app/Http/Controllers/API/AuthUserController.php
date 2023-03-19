@@ -94,11 +94,13 @@ class AuthUserController extends Controller
     }
     public function login(Request $request)
     {
-        if (auth()->attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = auth()->user();
-            $user->api_token = Str::random(60);
+        if ($request->session()->get(['email' => $request->email, 'password' => $request->password])) {
+            $user =  DB::table('users')->where('api_token', $request->api_token)->update(["api_token", Str::random(60)]);
+            // $user->api_token = Str::random(60);
             $user->save();
-            return $user;
+            return response($user)
+                ->header("Access-Control-Allow-Origin", config('cors.allowed_origins'))
+                ->header("Access-Control-Allow-Methods", config('cors.allowed_methods'));
         }
         return response()->json([
             'error' => 'احراز هویت کاربر با شکست مواجه شد'
@@ -128,7 +130,7 @@ class AuthUserController extends Controller
 
     public function logout(Request $request)
     {
-        DB::table('users')->where('api_token',$request->api_token)->update(["api_token" , null]);
+        DB::table('users')->where('api_token', $request->api_token)->update(["api_token", null]);
         return response()->json([
             'error' => 'خروج از سیستم با موفقیت انجام نشد'
         ], 401);

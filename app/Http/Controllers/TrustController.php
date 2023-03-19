@@ -13,10 +13,18 @@ class TrustController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $trusts = Trust::orderBy('created_at','desc')->paginate(50);
-        return view('admin.trusts.list',compact(['trusts']));
+        $from_date = null;
+        $to_date = null;
+        if ($request->from_date && $request->to_date) {
+            $from_date = change_date($request->from_date);
+            $to_date = change_date($request->to_date);
+            $trust = Trust::orderBy('created_at', 'desc')->whereBetween('set_data', [$from_date, $to_date])->paginate(50);
+        } else {
+            $trusts = Trust::orderBy('created_at', 'desc')->paginate(50);
+        }
+        return view('admin.trusts.list', compact(['trusts', 'from_date', 'to_date']));
     }
 
     /**

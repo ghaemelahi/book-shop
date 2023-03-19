@@ -10,7 +10,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 mr-2 d-flex">
             <div class="info">
-                <a href="#" class="d-block text-white">{{auth()->user()->name}} {{get_type_role_users(auth()->user()->id)}}</a>
+                <a href="#" class="d-block text-white">{{AUth()->user()->name}} {{get_type_role_users(AUth()->user()->id)}}</a>
             </div>
         </div>
 

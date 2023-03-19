@@ -14,10 +14,10 @@ class cartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $cart["cart"] = DB::table('orders')
-            ->join('books', 'orders.book_id', '=', 'books.id')
+            ->join('books', 'orders.book_id', '=', 'books.id' , 'api_token', '=',$request->session()->get('api_token'))
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->select([
                 'orders.id as id',
@@ -39,18 +39,18 @@ class cartController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id'=>'required',
-            'book_id'=>'required',
-            'total_prices'=>'required',
-            'type_pay'=>'required',
-        ]);
-        Orders::create([
-            'user_id' =>DB::table('users')->where('api_token',$request->api_token)->select('id'),
-            'book_id' => $request->book_id,
-            'total_prices' => str_replace(',','',$request->total_prices),
-            'type_pay' => $request->type_pay,
-        ]);
+        // $request->validate([
+        //     'user_id'=>'required',
+        //     'book_id'=>'required',
+        //     'total_prices'=>'required',
+        //     'type_pay'=>'required',
+        // ]);
+        // Orders::create([
+        //     'user_id' =>$request->user_id,
+        //     'book_id' => $request->book_id,
+        //     'total_prices' => str_replace(',','',$request->total_prices),
+        //     'type_pay' => $request->type_pay,
+        // ]);
     }
 
     /**
@@ -79,7 +79,7 @@ class cartController extends Controller
         ]);
         $orders = Orders::find($id);
         $orders->update([
-            'user_id' => auth()->user()->id,
+            'user_id' => $request->session()->get('id'),
             'book_id' => $request->book_id,
             'total_prices' => str_replace(',','',$request->total_prices),
             'type_pay' => $request->type_pay,
@@ -92,8 +92,24 @@ class cartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        return Orders::destroy($id);
+        return Orders::destroy($request->id);
     }
+
+    // public function create_cart(Request $request)
+    // {
+    //     $request->validate([
+    //         'user_id'=>'required',
+    //         'book_id'=>'required',
+    //         'total_prices'=>'required',
+    //         'type_pay'=>'required',
+    //     ]);
+    //     Orders::create([
+    //         'user_id' =>$request->user_id,
+    //         'book_id' => $request->book_id,
+    //         'total_prices' =>$request->total_prices,
+    //         'type_pay' => $request->type_pay,
+    //     ]);
+    // }
 }

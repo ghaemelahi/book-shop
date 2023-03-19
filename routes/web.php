@@ -57,10 +57,10 @@ Route::group(['perfix' => 'user'], function () {
 //     return 'http://localhost:5174/login';
 // }
 Auth::routes();
-Route::group(['middleware' => 'api_token', 'prfix' => 'admin'], function () {
-    Route::get('/', function () {
-        return view('admin.index');
-    });
+Route::group(['middleware' => 'auth', 'prfix' => 'admin'], function () {
+    // Route::get('/', function () {
+    //     return view('admin.index');
+    // });
     Route::resource('/users', UserController::class);
     Route::resource('/books', BooksController::class);
     Route::resource('/orders', OrdersController::class);

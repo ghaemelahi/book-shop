@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoleUsers
 {
@@ -16,6 +17,11 @@ class RoleUsers
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        $roles = DB::table('users')->select([
+            'roles'
+        ])->where('api_token', $request->api_token)->get();
+        if ($roles == 'admin') {
+            return $next($request);
+        }
     }
 }

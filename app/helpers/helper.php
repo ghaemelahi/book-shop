@@ -1,10 +1,12 @@
 <?php
 
+use Illuminate\Http\Request;
 use App\Models\Books;
 use Hekmatinasser\Verta\Verta;
 use App\Models\User;
 use App\Models\PostLike;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 function convertToEnglish($string)
 {
@@ -78,6 +80,15 @@ function get_user_type($id)
 	return $type;
 }
 
+function get_name_user(Request $request){
+	$users = DB::table('users')
+	->select('name')
+	->where('api_token', '=', $request->api_token);
+	return $users;
+
+
+}
+
 function get_status_pay_book($id)
 {
 	$pay = Books::find($id);
@@ -93,11 +104,15 @@ function get_status_pay_book($id)
 }
 function get_type_role_users($id)
 {
+	// $roles = $users = DB::table('users')
+	// ->select('roles')
+	// ->where('api_token', '=', $request->api_token);
+	// return $users;
 	$roles = User::find($id);
 	$role = '';
-	if ($roles->roles == 'user') {
+	if ($roles == 'user') {
 		$role = ' (کاربر) ';
-	} elseif ($roles->roles == 'admin') {
+	} elseif ($roles == 'admin') {
 		$role = ' (مدیر) ';
 	}
 	return $role;
